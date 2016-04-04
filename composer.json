@@ -1,0 +1,22 @@
+{
+    "name": "jds/Image",
+    "description": "An image rendering system for Just Data Systems",
+    "license": "proprietary",
+    "keywords": ["jds, image"],
+    "authors": [
+        {
+            "name": "Henry Grech-Cini",
+            "email": "henry.grechcini@prism-dm.co.uk"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "HGC\\": "src\\hgc",
+            "StackOverflow\\": "src\\stackoverflow"
+        }
+    }
+}

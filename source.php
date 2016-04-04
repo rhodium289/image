@@ -1,0 +1,92 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: henrygc
+ * Date: 04/04/16
+ * Time: 20:59
+ */
+
+/* This will take the following parameters
+
+    ref a string [Mandatory]
+    w [Optional] default 100
+    h [Optional] default 100
+
+*/
+
+
+foreach (array(__DIR__ . '/../../autoload.php', __DIR__ . '/vendor/autoload.php') as $file) {
+    if (file_exists($file)) {
+        define('PHPUNIT_COMPOSER_INSTALL', $file);
+        break;
+    }
+}
+
+if (!defined('PHPUNIT_COMPOSER_INSTALL')) {
+    die(
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'wget http://getcomposer.org/composer.phar' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
+
+require PHPUNIT_COMPOSER_INSTALL;
+
+$timer=new HGC\Timer();
+$timer->start();
+$parameterHandler=HGC\ParameterHandler::getInstance();
+
+$parameterHandler->setSource(HGC\ParameterHandler::SOURCE_GET);
+$parameterHandler->setDefault('w', 100);
+$parameterHandler->setDefault('h', 100);
+$parameterHandler->setMandatory('r');
+$parameterHandler->setValidationRegex('w', '/^\d*$/');
+$parameterHandler->setValidationRegex('h', '/^\d*$/');
+$parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9]*$/');
+
+$parameterHandler->assertOK();
+
+// find out if you have a cached image and do not need to resize
+$parameters=$parameterHandler->getParameters();
+ksort($parameters);
+$rawCacheKey=http_build_query($parameters);
+$cacheKey=md5($rawCacheKey);
+
+$cacheImageFileName=$cacheKey.'.jpg';
+$cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
+
+// does a cache file with this name exist?
+
+$requestUtils=new HGC\RequestUtils();
+$requestUtils->set_header('JPEG');
+
+$needToGenerate=!file_exists($cacheFullFileName);
+
+if ($needToGenerate) {
+    // proceed to render the image at the required size
+    $image=StackOverflow\ResizeImage::generate(
+        __DIR__.'/sourceImages/'.$parameterHandler->getValue('r').'.jpg',
+        $parameterHandler->getValue('w'),
+        $parameterHandler->getValue('h')
+    );
+
+    // write the image to the cache file for future use
+    imagejpeg($image, $cacheFullFileName, 100);
+}
+
+
+$timer->stop();
+
+header('XImageTimeToRender: '.$timer->getAccumulatedTime());
+header('XImageCacheFileName: '.$cacheImageFileName);
+
+if ($needToGenerate) {
+    header('XImageSource: generated');
+    imagejpeg($image, null, 100);
+} else {
+    header('XImageSource: from cache');
+    readfile($cacheFullFileName);
+}
+
+
+
