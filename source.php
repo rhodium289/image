@@ -78,7 +78,6 @@ try {
         // find the source image
         $matches=glob(__DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'*.jpg');
 
-        var_dump($matches);
         if (count($matches)==1) {
             $sourceImageFileName=$matches[0];
         } else {
