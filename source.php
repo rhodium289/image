@@ -70,11 +70,16 @@ try {
 
     $cacheImageFileName=$cacheKey.'.jpg';
     $cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
+    $sourceImageFileName=__DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg';
 
     // does a cache file with this name exist?
     $needToGenerate=!file_exists($cacheFullFileName);
 
     if ($needToGenerate) {
+        // check that the source image exists
+        if (!file_exists($sourceImageFileName)) {
+            throw \Exception('Image not found');
+        }
         // proceed to render the image at the required size
         $image=StackOverflow\ResizeImage::generate(
             __DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg',
