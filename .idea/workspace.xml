@@ -38,8 +38,8 @@
       <file leaf-file-name="source.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5246711">
-              <caret line="80" column="27" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.60855263">
+              <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
               </folding>
@@ -465,7 +465,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459942092040</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Debug">
+      <created>1459942235698</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1459942235698</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -676,8 +682,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5246711">
-          <caret line="80" column="27" selection-start-line="80" selection-start-column="27" selection-end-line="80" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.60855263">
+          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
           </folding>

@@ -78,9 +78,7 @@ try {
         // find the source image
         $matches=glob(__DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'*.jpg');
 
-        var_dump($matches);
-        if (count($matches)!=1) {
-            header('XDebug: '.$matches[0]);
+        if (count($matches)==1) {
             $sourceImageFileName=$matches[0];
         } else {
             throw new \Exception('The r parameter found multiple results.');
