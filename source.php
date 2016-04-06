@@ -61,6 +61,45 @@ $requestUtils->set_header('JPEG');
 // check that the parameters satisfy the required constraints
 try {
     $parameterHandler->assertOK();
+
+    // find out if you have a cached image and do not need to resize
+    $parameters=$parameterHandler->getParameters();
+    ksort($parameters);
+    $rawCacheKey=http_build_query($parameters);
+    $cacheKey=md5($rawCacheKey);
+
+    $cacheImageFileName=$cacheKey.'.jpg';
+    $cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
+
+    // does a cache file with this name exist?
+    $needToGenerate=!file_exists($cacheFullFileName);
+
+    if ($needToGenerate) {
+        // proceed to render the image at the required size
+        $image=StackOverflow\ResizeImage::generate(
+            __DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg',
+            $parameterHandler->getValue('w'),
+            $parameterHandler->getValue('h')
+        );
+
+        // write the image to the cache file for future use
+        imagejpeg($image, $cacheFullFileName, 100);
+    }
+
+
+    $timer->stop();
+
+    header('XImageTimeToRender: '.$timer->getAccumulatedTime());
+    header('XImageCacheFileName: '.$cacheImageFileName);
+
+    if ($needToGenerate) {
+        header('XImageSource: generated');
+        imagejpeg($image, null, 100);
+    } else {
+        header('XImageSource: from cache');
+        readfile($cacheFullFileName);
+    }
+
 } catch(\Exception $e) {
     $image=StackOverflow\ResizeImage::generate(
         __DIR__.'/assets/triangular-warning-sign.jpg',
@@ -79,47 +118,5 @@ try {
     imagejpeg($image, null, 100);
     exit();
 }
-
-// find out if you have a cached image and do not need to resize
-$parameters=$parameterHandler->getParameters();
-ksort($parameters);
-$rawCacheKey=http_build_query($parameters);
-$cacheKey=md5($rawCacheKey);
-
-$cacheImageFileName=$cacheKey.'.jpg';
-$cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
-
-// does a cache file with this name exist?
-
-
-
-$needToGenerate=!file_exists($cacheFullFileName);
-
-if ($needToGenerate) {
-    // proceed to render the image at the required size
-    $image=StackOverflow\ResizeImage::generate(
-        __DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg',
-        $parameterHandler->getValue('w'),
-        $parameterHandler->getValue('h')
-    );
-
-    // write the image to the cache file for future use
-    imagejpeg($image, $cacheFullFileName, 100);
-}
-
-
-$timer->stop();
-
-header('XImageTimeToRender: '.$timer->getAccumulatedTime());
-header('XImageCacheFileName: '.$cacheImageFileName);
-
-if ($needToGenerate) {
-    header('XImageSource: generated');
-    imagejpeg($image, null, 100);
-} else {
-    header('XImageSource: from cache');
-    readfile($cacheFullFileName);
-}
-
 
 
