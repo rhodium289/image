@@ -38,8 +38,8 @@
       <file leaf-file-name="source.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47532895">
-              <caret line="88" column="73" selection-start-line="88" selection-start-column="73" selection-end-line="88" selection-end-column="73" />
+            <state vertical-scroll-proportion="0.16940789">
+              <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
               </folding>
@@ -453,7 +453,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459941790893</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="More info in exception when image not found">
+      <created>1459941931932</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1459941931932</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -496,7 +502,8 @@
     <MESSAGE value="Check if sourceImage exists if required" />
     <MESSAGE value="Fixed minor but with missing new!" />
     <MESSAGE value="Added support for wildcard finding of images which match r parameter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added support for wildcard finding of images which match r parameter" />
+    <MESSAGE value="More info in exception when image not found" />
+    <option name="LAST_COMMIT_MESSAGE" value="More info in exception when image not found" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -662,8 +669,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47532895">
-          <caret line="88" column="73" selection-start-line="88" selection-start-column="73" selection-end-line="88" selection-end-column="73" />
+        <state vertical-scroll-proportion="0.16940789">
+          <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
           </folding>
