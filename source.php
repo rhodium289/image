@@ -77,7 +77,7 @@ try {
     header('XImageException: '.var_export($e->getMessage()));
 
     imagejpeg($image, null, 100);
-    die();
+    exit();
 }
 
 // find out if you have a cached image and do not need to resize
