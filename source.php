@@ -86,7 +86,7 @@ try {
 
         // check that the source image exists
         if (!file_exists($sourceImageFileName)) {
-            throw new \Exception('Image not found');
+            throw new \Exception('Image not found, '.$sourceImageFileName);
         }
         // proceed to render the image at the required size
         $image=StackOverflow\ResizeImage::generate(
