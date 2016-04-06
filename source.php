@@ -38,13 +38,13 @@ $parameterHandler=HGC\ParameterHandler::getInstance();
 
 $parameterHandler->setSource(HGC\ParameterHandler::SOURCE_GET);
 
-// this is the Reference for the asset
-$parameterHandler->setMandatory('r');
-$parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9]*$/');
-
 // this is the client parameter
 $parameterHandler->setMandatory('c');
 $parameterHandler->setValidationRegex('c', '/^(lch|test)*$/');
+
+// this is the Reference for the asset
+$parameterHandler->setMandatory('r');
+$parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9-]*$/');
 
 // this is the desired width parameter
 $parameterHandler->setDefault('w', 100);
@@ -70,12 +70,20 @@ try {
 
     $cacheImageFileName=$cacheKey.'.jpg';
     $cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
-    $sourceImageFileName=__DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg';
 
     // does a cache file with this name exist?
     $needToGenerate=!file_exists($cacheFullFileName);
 
     if ($needToGenerate) {
+        // find the source image
+        $matches=glob(__DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'*.jpg');
+
+        if (count($matches)!=1) {
+            $sourceImageFileName=$matches[0];
+        } else {
+            throw new \Exception('The r parameter found multiple results.');
+        }
+
         // check that the source image exists
         if (!file_exists($sourceImageFileName)) {
             throw new \Exception('Image not found');
