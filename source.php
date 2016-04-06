@@ -91,7 +91,7 @@ try {
         }
         // proceed to render the image at the required size
         $image=StackOverflow\ResizeImage::generate(
-            __DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg',
+            $sourceImageFileName,
             $parameterHandler->getValue('w'),
             $parameterHandler->getValue('h')
         );
