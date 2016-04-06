@@ -37,13 +37,24 @@ $timer->start();
 $parameterHandler=HGC\ParameterHandler::getInstance();
 
 $parameterHandler->setSource(HGC\ParameterHandler::SOURCE_GET);
-$parameterHandler->setDefault('w', 100);
-$parameterHandler->setDefault('h', 100);
+
+// this is the Reference for the asset
 $parameterHandler->setMandatory('r');
-$parameterHandler->setValidationRegex('w', '/^\d*$/');
-$parameterHandler->setValidationRegex('h', '/^\d*$/');
 $parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9]*$/');
 
+// this is the client parameter
+$parameterHandler->setMandatory('c');
+$parameterHandler->setValidationRegex('r', '/^(lch|test)*$/');
+
+// this is the desired width parameter
+$parameterHandler->setDefault('w', 100);
+$parameterHandler->setValidationRegex('w', '/^\d*$/');
+
+// this is the desired height parameter
+$parameterHandler->setDefault('h', 100);
+$parameterHandler->setValidationRegex('h', '/^\d*$/');
+
+// check that the parameters satisfy the required constraints
 $parameterHandler->assertOK();
 
 // find out if you have a cached image and do not need to resize
@@ -65,7 +76,7 @@ $needToGenerate=!file_exists($cacheFullFileName);
 if ($needToGenerate) {
     // proceed to render the image at the required size
     $image=StackOverflow\ResizeImage::generate(
-        __DIR__.'/sourceImages/'.$parameterHandler->getValue('r').'.jpg',
+        __DIR__.'/sourceImages/'.$parameterHandler->getValue('c').'/'.$parameterHandler->getValue('r').'.jpg',
         $parameterHandler->getValue('w'),
         $parameterHandler->getValue('h')
     );
