@@ -41,7 +41,7 @@ class ParameterHandler {
                 if (in_array($source, $valid)) {
                         $this->_source = $source;
                 } else {
-                        throw new Exception('Invalid default source defined for parameters');
+                        throw new \Exception('Invalid default source defined for parameters');
                 }
         }
 
@@ -102,7 +102,7 @@ class ParameterHandler {
                                 }
                                 break;
                         default:
-                                throw(new Exception('No recognised source for parameters'));
+                                throw(new \Exception('No recognised source for parameters'));
                                 break;
                 }
             }
