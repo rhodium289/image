@@ -74,7 +74,7 @@ try {
     header('XImageCacheFileName: '.$cacheImageFileName);
 
     header('XImageSource: from assets resized');
-    header('XImageException: '.var_export($e->getMessage()));
+    header('XImageException: '.$e->getMessage());
 
     imagejpeg($image, null, 100);
     exit();
