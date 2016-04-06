@@ -54,6 +54,10 @@ $parameterHandler->setValidationRegex('w', '/^\d*$/');
 $parameterHandler->setDefault('h', 100);
 $parameterHandler->setValidationRegex('h', '/^\d*$/');
 
+// get ready to return an image
+$requestUtils=new HGC\RequestUtils();
+$requestUtils->set_header('JPEG');
+
 // check that the parameters satisfy the required constraints
 try {
     $parameterHandler->assertOK();
@@ -87,8 +91,7 @@ $cacheFullFileName=__DIR__.'/cache/'.$cacheImageFileName;
 
 // does a cache file with this name exist?
 
-$requestUtils=new HGC\RequestUtils();
-$requestUtils->set_header('JPEG');
+
 
 $needToGenerate=!file_exists($cacheFullFileName);
 
