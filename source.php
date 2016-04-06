@@ -81,7 +81,7 @@ try {
         if (count($matches)==1) {
             $sourceImageFileName=$matches[0];
         } else {
-            throw new \Exception('The r parameter found multiple results.');
+            throw new \Exception('The r parameter found '.count($matches).' results.');
         }
 
         // check that the source image exists
