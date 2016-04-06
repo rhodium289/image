@@ -44,7 +44,7 @@ $parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9]*$/');
 
 // this is the client parameter
 $parameterHandler->setMandatory('c');
-$parameterHandler->setValidationRegex('r', '/^(lch|test)*$/');
+$parameterHandler->setValidationRegex('c', '/^(lch|test)*$/');
 
 // this is the desired width parameter
 $parameterHandler->setDefault('w', 100);
@@ -55,7 +55,26 @@ $parameterHandler->setDefault('h', 100);
 $parameterHandler->setValidationRegex('h', '/^\d*$/');
 
 // check that the parameters satisfy the required constraints
-$parameterHandler->assertOK();
+try {
+    $parameterHandler->assertOK();
+} catch(\Exception $e) {
+    $image=StackOverflow\ResizeImage::generate(
+        __DIR__.'/assets/triangular-warning-sign.jpg',
+        $parameterHandler->getValue('w'),
+        $parameterHandler->getValue('h')
+    );
+
+    $timer->stop();
+
+    header('XImageTimeToRender: '.$timer->getAccumulatedTime());
+    header('XImageCacheFileName: '.$cacheImageFileName);
+
+    header('XImageSource: from assets resized');
+    header('XImageException: '.var_export($e->getMessage()));
+
+    imagejpeg($image, null, 100);
+    die();
+}
 
 // find out if you have a cached image and do not need to resize
 $parameters=$parameterHandler->getParameters();
