@@ -38,21 +38,40 @@ $parameterHandler=HGC\ParameterHandler::getInstance();
 
 $parameterHandler->setSource(HGC\ParameterHandler::SOURCE_GET);
 
-// this is the client parameter
-$parameterHandler->setMandatory('c');
-$parameterHandler->setValidationRegex('c', '/^(lch|test)*$/');
+$parameterHandler->setDefault('q', null);
 
-// this is the Reference for the asset
-$parameterHandler->setMandatory('r');
-$parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9-]*$/');
+if ($parameterHandler->isValueSet('q')) {
+    // at this point we need to process the clean URL as follow
 
-// this is the desired width parameter
-$parameterHandler->setDefault('w', 100);
-$parameterHandler->setValidationRegex('w', '/^\d*$/');
+    // do some error handling
 
-// this is the desired height parameter
-$parameterHandler->setDefault('h', 100);
-$parameterHandler->setValidationRegex('h', '/^\d*$/');
+    // q=/<c>/<w>/<h>/<r>.jpg
+    list($c,$w,$h,$r)=preg_match_all('|^([^/]*)/([^/]*)/([^/]*)/(.*)$|');
+
+    $parameterHandler->setValue('c', $c);
+    $parameterHandler->setValue('w', $w);
+    $parameterHandler->setValue('h', $h);
+    $parameterHandler->setValue('r', $r);
+} else {
+    // this is the client parameter
+    $parameterHandler->setMandatory('c');
+
+    // this is the client parameter
+    $parameterHandler->setMandatory('c');
+    $parameterHandler->setValidationRegex('c', '/^(lch|test)*$/');
+
+    // this is the Reference for the asset
+    $parameterHandler->setMandatory('r');
+    $parameterHandler->setValidationRegex('r', '/^[a-zA-Z0-9-]*$/');
+
+    // this is the desired width parameter
+    $parameterHandler->setDefault('w', 100);
+    $parameterHandler->setValidationRegex('w', '/^\d*$/');
+
+    // this is the desired height parameter
+    $parameterHandler->setDefault('h', 100);
+    $parameterHandler->setValidationRegex('h', '/^\d*$/');
+}
 
 // get ready to return an image
 $requestUtils=new HGC\RequestUtils();
